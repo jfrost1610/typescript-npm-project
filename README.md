@@ -6,7 +6,7 @@ This will help you to set the project up and running on your local machine for d
 
 ### Prerequisites
 * Node [Download here](https://nodejs.org)
-* An IDE [VSCode](https://code.visualstudio.com/)
+* Optional IDE [VSCode](https://code.visualstudio.com/)
 
 ### Setup
 
@@ -17,7 +17,7 @@ npm -v
 ```
 Install typescript
 ```
-node install typescript -g
+npm install typescript -g
 ```
 Clone the project
 ```
