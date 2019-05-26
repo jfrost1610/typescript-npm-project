@@ -12,7 +12,7 @@ if (process.argv.length < 3) {
     let userName: string = process.argv[2];
 
     svc.getUserInfo(userName, (user: User) => {
-        svc.getRepos(userName, (repos: Repo[]) => {
+        svc.getRepos(user.reposURL, (repos: Repo[]) => {
             let sortedRepos = _.sortBy(repos, [(repo: Repo) => repo.size * (-1)]);
             let filteredRepos = _.take(sortedRepos, 5);
             user.repos = filteredRepos;
@@ -20,4 +20,3 @@ if (process.argv.length < 3) {
         });
     });
 }
-

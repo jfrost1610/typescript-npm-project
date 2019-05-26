@@ -5,6 +5,7 @@ export class User {
     fullName: string;
     repoCount: number;
     followerCount: number;
+    reposURL: string
     repos?: Repo[];
 
     constructor(userResponse: any) {
@@ -12,5 +13,6 @@ export class User {
         this.fullName = userResponse.name;
         this.repoCount = userResponse.public_repos;
         this.followerCount = userResponse.followers;
+        this.reposURL = userResponse.repos_url;
     }
 }

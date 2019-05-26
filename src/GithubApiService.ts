@@ -1,6 +1,7 @@
 import * as request from 'request';
 import { Repo } from './Repo';
 import { User } from './User';
+import { Http2ServerResponse } from 'http2';
 
 const OPTIONS: any = {
     headers: {
@@ -17,19 +18,37 @@ export class GithubApiService {
 
         request.get('https://api.github.com/users/' + userName, OPTIONS,
             (error: any, response: any, body: any) => {
-                cb(new User(body));
+
+                if (error == null) {
+                    if (response.headers.status === '200 OK') {
+                        cb(new User(body));
+                    } else {
+                        console.error("Error in getting user response! Status :: ", response.headers.status);
+                    }
+                } else {
+                    console.error("Error in getting user response! :: ", error);
+                }
             });
     }
 
-    getRepos(userName: string, cb: (repos: Repo[]) => any) {
-        request.get('https://api.github.com/users/' + userName + '/repos', OPTIONS,
+    getRepos(repoURL: string, cb: (repos: Repo[]) => any) {
+        request.get(repoURL, OPTIONS,
             (error: any, response: any, body: any) => {
 
-                let repos = body.map(
-                    (repo: any) => new Repo(repo)
-                );
+                if (error == null) {
+                    if (response.headers.status === '200 OK') {
 
-                cb(repos);
+                        let repos = body.map(
+                            (repo: any) => new Repo(repo)
+                        );
+                        cb(repos);
+
+                    } else {
+                        console.error("Error in getting repo response! Status :: ", response.headers.status);
+                    }
+                } else {
+                    console.error("Error in getting repo response! :: ", error);
+                }
             });
 
     }
